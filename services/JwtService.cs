@@ -45,4 +45,9 @@ public class JwtService
         return new JwtSecurityTokenHandler()
             .WriteToken(token);
     }
+    public string GenerateRefreshToken()
+{
+    return Guid.NewGuid().ToString("N") +
+           Guid.NewGuid().ToString("N");
+}
 }

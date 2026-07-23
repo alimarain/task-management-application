@@ -45,4 +45,16 @@ public class AuthController : ControllerBase
             Role = User.FindFirstValue(ClaimTypes.Role)
         });
     }
+
+    [HttpPost("refresh")]
+public async Task<IActionResult> RefreshToken(
+    RefreshTokenDto dto)
+{
+    var result = await _service.RefreshTokenAsync(dto);
+
+    if (result == null)
+        return Unauthorized();
+
+    return Ok(result);
+}
 }

@@ -7,4 +7,8 @@ public interface IAuthRepository
     Task<User?> GetByEmailAsync(string email);
 
     Task AddUserAsync(User user);
+    Task UpdateAsync(User user);
+
+    Task<User?> GetByRefreshTokenAsync(string refreshToken);
+
 }

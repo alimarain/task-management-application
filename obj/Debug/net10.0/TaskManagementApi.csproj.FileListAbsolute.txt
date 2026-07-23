@@ -160,3 +160,4 @@
 /Users/muhammadusman/Documents/DotNetProjects/TaskManagementApi/obj/Debug/net10.0/TaskManagementApi.pdb
 /Users/muhammadusman/Documents/DotNetProjects/TaskManagementApi/obj/Debug/net10.0/TaskManagementApi.genruntimeconfig.cache
 /Users/muhammadusman/Documents/DotNetProjects/TaskManagementApi/obj/Debug/net10.0/ref/TaskManagementApi.dll
+/Users/muhammadusman/Documents/DotNetProjects/TaskManagementApi/obj/Debug/net10.0/TaskManagementApi.sourcelink.json
