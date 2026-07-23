@@ -21,6 +21,10 @@ builder.Services.AddDbContext<AppDbContext>(options =>
         builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
+
+builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddScoped<ICurrentUserService,CurrentUserService>();
 builder.Services.AddScoped<ITaskRepository, TaskRepository>();
 
 builder.Services.AddScoped<ITaskService, TaskService>();
@@ -64,6 +68,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+using(var scope = app.Services.CreateScope())
+{
+    await DbSeeder.SeedAdminAsync(scope.ServiceProvider);
+}
 
 if (app.Environment.IsDevelopment())
 {

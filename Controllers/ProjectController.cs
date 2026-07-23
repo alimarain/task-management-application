@@ -1,9 +1,11 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TaskManagementApi.Models.DTOs;
 using TaskManagementApi.Services.Interfaces;
 
 namespace TaskManagementApi.Controllers;
 
+[Authorize] // Requires authentication for all endpoints in this controller
 [ApiController]
 [Route("api/[controller]")]
 public class ProjectController : ControllerBase
@@ -15,12 +17,14 @@ public class ProjectController : ControllerBase
         _service = service;
     }
 
+    // Accessible by any authenticated user (Admin or User)
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
         return Ok(await _service.GetAllAsync());
     }
 
+    // Accessible by any authenticated user (Admin or User)
     [HttpGet("{id}")]
     public async Task<IActionResult> Get(int id)
     {
@@ -32,8 +36,10 @@ public class ProjectController : ControllerBase
         return Ok(project);
     }
 
+    // Restricted to Admins only
     [HttpPost]
-    public async Task<IActionResult> Create(CreateProjectDto dto)
+    [Authorize(Roles = "Admin")]
+    public async Task<IActionResult> Create([FromBody] CreateProjectDto dto)
     {
         var project = await _service.CreateAsync(dto);
 
@@ -43,10 +49,10 @@ public class ProjectController : ControllerBase
             project);
     }
 
+    // Restricted to Admins only
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(
-        int id,
-        UpdateProjectDto dto)
+    [Authorize(Roles = "Admin")]
+    public async Task<IActionResult> Update(int id, [FromBody] UpdateProjectDto dto)
     {
         var result = await _service.UpdateAsync(id, dto);
 
@@ -56,7 +62,9 @@ public class ProjectController : ControllerBase
         return Ok("Project updated successfully.");
     }
 
+    // Restricted to Admins only
     [HttpDelete("{id}")]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Delete(int id)
     {
         var result = await _service.DeleteAsync(id);
