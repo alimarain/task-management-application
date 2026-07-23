@@ -119,4 +119,18 @@ public class AuthService : IAuthService
             Role = user.Role
         };
     }
+
+    public async Task LogoutAsync(string refreshToken)
+{
+    var user = await _repository
+        .GetByRefreshTokenAsync(refreshToken);
+
+    if (user == null)
+        return;
+
+    user.RefreshToken = null;
+    user.RefreshTokenExpiryTime = null;
+
+    await _repository.UpdateAsync(user);
+}
 }

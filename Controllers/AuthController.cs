@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using TaskManagementApi.DTOs.Auth;
+using TaskManagementApi.Models.Responses;
 using TaskManagementApi.Services.Interfaces;
 
 namespace TaskManagementApi.Controllers;
@@ -56,5 +57,16 @@ public async Task<IActionResult> RefreshToken(
         return Unauthorized();
 
     return Ok(result);
+}
+[HttpPost("logout")]
+public async Task<IActionResult> Logout(
+    RefreshTokenDto dto)
+{
+    await _service.LogoutAsync(dto.RefreshToken);
+
+    return Ok(new ApiResponse<string>(
+        true,
+        "Logged out successfully.",
+        null));
 }
 }

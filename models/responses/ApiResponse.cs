@@ -1,4 +1,4 @@
-namespace StudentApi.Responses;
+namespace TaskManagementApi.Models.Responses;
 
 public class ApiResponse<T>
 {
@@ -13,10 +13,7 @@ public class ApiResponse<T>
 
     }
 
-    public ApiResponse(
-        bool success,
-        string message,
-        T? data)
+    public ApiResponse(bool success,string message,T? data)
     {
         Success = success;
         Message = message;
