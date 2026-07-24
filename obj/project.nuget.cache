@@ -1,9 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "EEUJ3LGDhoc=",
+  "dgSpecHash": "HDS6h4YqUcQ=",
   "success": true,
   "projectFilePath": "/Users/muhammadusman/Documents/DotNetProjects/TaskManagementApi/TaskManagementApi.csproj",
   "expectedPackageFiles": [
+    "/Users/muhammadusman/.nuget/packages/asp.versioning.abstractions/10.0.0/asp.versioning.abstractions.10.0.0.nupkg.sha512",
+    "/Users/muhammadusman/.nuget/packages/asp.versioning.http/10.0.0/asp.versioning.http.10.0.0.nupkg.sha512",
+    "/Users/muhammadusman/.nuget/packages/asp.versioning.mvc/10.0.0/asp.versioning.mvc.10.0.0.nupkg.sha512",
+    "/Users/muhammadusman/.nuget/packages/automapper/16.2.0/automapper.16.2.0.nupkg.sha512",
+    "/Users/muhammadusman/.nuget/packages/automapper.extensions.microsoft.dependencyinjection/12.0.1/automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
     "/Users/muhammadusman/.nuget/packages/azure.core/1.47.1/azure.core.1.47.1.nupkg.sha512",
     "/Users/muhammadusman/.nuget/packages/azure.identity/1.14.2/azure.identity.1.14.2.nupkg.sha512",
     "/Users/muhammadusman/.nuget/packages/fluentvalidation/11.11.0/fluentvalidation.11.11.0.nupkg.sha512",
@@ -32,6 +37,7 @@
     "/Users/muhammadusman/.nuget/packages/microsoft.entityframeworkcore.tools/10.0.10/microsoft.entityframeworkcore.tools.10.0.10.nupkg.sha512",
     "/Users/muhammadusman/.nuget/packages/microsoft.extensions.apidescription.server/10.0.0/microsoft.extensions.apidescription.server.10.0.0.nupkg.sha512",
     "/Users/muhammadusman/.nuget/packages/microsoft.extensions.dependencymodel/10.0.10/microsoft.extensions.dependencymodel.10.0.10.nupkg.sha512",
+    "/Users/muhammadusman/.nuget/packages/microsoft.extensions.diagnostics.healthchecks.entityframeworkcore/10.0.10/microsoft.extensions.diagnostics.healthchecks.entityframeworkcore.10.0.10.nupkg.sha512",
     "/Users/muhammadusman/.nuget/packages/microsoft.extensions.identity.core/10.0.10/microsoft.extensions.identity.core.10.0.10.nupkg.sha512",
     "/Users/muhammadusman/.nuget/packages/microsoft.identity.client/4.73.1/microsoft.identity.client.4.73.1.nupkg.sha512",
     "/Users/muhammadusman/.nuget/packages/microsoft.identity.client.extensions.msal/4.73.1/microsoft.identity.client.extensions.msal.4.73.1.nupkg.sha512",
@@ -46,6 +52,15 @@
     "/Users/muhammadusman/.nuget/packages/microsoft.visualstudio.solutionpersistence/1.0.52/microsoft.visualstudio.solutionpersistence.1.0.52.nupkg.sha512",
     "/Users/muhammadusman/.nuget/packages/mono.texttemplating/3.0.0/mono.texttemplating.3.0.0.nupkg.sha512",
     "/Users/muhammadusman/.nuget/packages/newtonsoft.json/13.0.3/newtonsoft.json.13.0.3.nupkg.sha512",
+    "/Users/muhammadusman/.nuget/packages/serilog/4.3.0/serilog.4.3.0.nupkg.sha512",
+    "/Users/muhammadusman/.nuget/packages/serilog.aspnetcore/10.0.0/serilog.aspnetcore.10.0.0.nupkg.sha512",
+    "/Users/muhammadusman/.nuget/packages/serilog.extensions.hosting/10.0.0/serilog.extensions.hosting.10.0.0.nupkg.sha512",
+    "/Users/muhammadusman/.nuget/packages/serilog.extensions.logging/10.0.0/serilog.extensions.logging.10.0.0.nupkg.sha512",
+    "/Users/muhammadusman/.nuget/packages/serilog.formatting.compact/3.0.0/serilog.formatting.compact.3.0.0.nupkg.sha512",
+    "/Users/muhammadusman/.nuget/packages/serilog.settings.configuration/10.0.0/serilog.settings.configuration.10.0.0.nupkg.sha512",
+    "/Users/muhammadusman/.nuget/packages/serilog.sinks.console/6.1.1/serilog.sinks.console.6.1.1.nupkg.sha512",
+    "/Users/muhammadusman/.nuget/packages/serilog.sinks.debug/3.0.0/serilog.sinks.debug.3.0.0.nupkg.sha512",
+    "/Users/muhammadusman/.nuget/packages/serilog.sinks.file/7.0.0/serilog.sinks.file.7.0.0.nupkg.sha512",
     "/Users/muhammadusman/.nuget/packages/swashbuckle.aspnetcore/10.2.3/swashbuckle.aspnetcore.10.2.3.nupkg.sha512",
     "/Users/muhammadusman/.nuget/packages/swashbuckle.aspnetcore.swagger/10.2.3/swashbuckle.aspnetcore.swagger.10.2.3.nupkg.sha512",
     "/Users/muhammadusman/.nuget/packages/swashbuckle.aspnetcore.swaggergen/10.2.3/swashbuckle.aspnetcore.swaggergen.10.2.3.nupkg.sha512",
@@ -73,6 +88,18 @@
       "warningLevel": 1,
       "filePath": "/Users/muhammadusman/Documents/DotNetProjects/TaskManagementApi/TaskManagementApi.csproj",
       "libraryId": "Microsoft.Extensions.Identity.Core",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    },
+    {
+      "code": "NU1608",
+      "level": "Warning",
+      "message": "Detected package version outside of dependency constraint: AutoMapper.Extensions.Microsoft.DependencyInjection 12.0.1 requires AutoMapper (= 12.0.1) but version AutoMapper 16.2.0 was resolved.",
+      "projectPath": "/Users/muhammadusman/Documents/DotNetProjects/TaskManagementApi/TaskManagementApi.csproj",
+      "warningLevel": 1,
+      "filePath": "/Users/muhammadusman/Documents/DotNetProjects/TaskManagementApi/TaskManagementApi.csproj",
+      "libraryId": "AutoMapper",
       "targetGraphs": [
         "net10.0"
       ]

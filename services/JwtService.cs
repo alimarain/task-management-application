@@ -1,18 +1,20 @@
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using TaskManagementApi.Configuration;
 using TaskManagementApi.Models.Entities;
 
 namespace TaskManagementApi.Services;
 
 public class JwtService
 {
-    private readonly IConfiguration _configuration;
+    private readonly JwtSettings _jwtSettings;
 
-    public JwtService(IConfiguration configuration)
+    public JwtService(IOptions<JwtSettings> jwtOptions)
     {
-        _configuration = configuration;
+        _jwtSettings = jwtOptions.Value;
     }
 
     public string GenerateToken(User user)
@@ -27,7 +29,7 @@ public class JwtService
 
         var key = new SymmetricSecurityKey(
             Encoding.UTF8.GetBytes(
-                _configuration["Jwt:Key"]!));
+                _jwtSettings.Key));
 
         var credentials =
             new SigningCredentials(
@@ -36,18 +38,19 @@ public class JwtService
 
         var token =
             new JwtSecurityToken(
-                issuer:_configuration["Jwt:Issuer"],
-                audience:_configuration["Jwt:Audience"],
+                issuer:_jwtSettings.Issuer,
+                audience:_jwtSettings.Audience,
                 claims:claims,
-                expires:DateTime.UtcNow.AddMinutes(60),
+                expires:DateTime.UtcNow.AddMinutes(_jwtSettings.ExpiryMinutes),
                 signingCredentials:credentials);
 
         return new JwtSecurityTokenHandler()
             .WriteToken(token);
     }
+
     public string GenerateRefreshToken()
-{
-    return Guid.NewGuid().ToString("N") +
-           Guid.NewGuid().ToString("N");
-}
+    {
+        return Guid.NewGuid().ToString("N") +
+               Guid.NewGuid().ToString("N");
+    }
 }

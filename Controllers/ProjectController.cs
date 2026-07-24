@@ -1,3 +1,4 @@
+using Asp.Versioning;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TaskManagementApi.DTOs;
@@ -7,8 +8,8 @@ namespace TaskManagementApi.Controllers;
 
 [Authorize] // Requires authentication for all endpoints in this controller
 [ApiController]
-[Route("api/[controller]")]
-public class ProjectController : ControllerBase
+[ApiVersion("1.0")]
+[Route("api/v{version:apiVersion}/[controller]")]public class ProjectController : ControllerBase
 {
     private readonly IProjectService _service;
 

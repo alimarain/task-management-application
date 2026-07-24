@@ -2,11 +2,12 @@ using Microsoft.AspNetCore.Mvc;
 using TaskManagementApi.DTOs;
 using TaskManagementApi.Services.Interfaces;
 using TaskManagementApi.Models.QueryParameters;
+using Asp.Versioning;
 namespace TaskManagementApi.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
-public class TaskController : ControllerBase
+[ApiVersion("1.0")]
+[Route("api/v{version:apiVersion}/[controller]")]public class TaskController : ControllerBase
 {
     private readonly ITaskService _service;
 
