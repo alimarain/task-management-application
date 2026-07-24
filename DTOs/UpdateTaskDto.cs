@@ -1,4 +1,4 @@
-namespace TaskManagementApi.Models.DTOs;
+namespace TaskManagementApi.DTOs;
 
 public class UpdateTaskDto
 {

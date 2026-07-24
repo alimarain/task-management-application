@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using TaskManagementApi.Models.DTOs;
+using TaskManagementApi.DTOs;
 using TaskManagementApi.Services.Interfaces;
 using TaskManagementApi.Models.QueryParameters;
 namespace TaskManagementApi.Controllers;

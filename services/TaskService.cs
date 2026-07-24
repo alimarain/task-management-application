@@ -1,4 +1,4 @@
-using TaskManagementApi.Models.DTOs;
+using TaskManagementApi.DTOs;
 using TaskManagementApi.Models.Entities;
 using TaskManagementApi.Models.QueryParameters;
 using TaskManagementApi.Repositories.Interfaces;

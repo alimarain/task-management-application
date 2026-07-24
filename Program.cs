@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using TaskManagementApi.Data;
 using TaskManagementApi.Middleware;
 using TaskManagementApi.Repositories;
@@ -10,9 +12,11 @@ using TaskManagementApi.Services;
 using TaskManagementApi.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
-// Controllers
-builder.Services.AddControllers();
 
+// Controllers & Validation
+builder.Services.AddControllers();
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 
 // Database
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -21,24 +25,19 @@ builder.Services.AddDbContext<AppDbContext>(options =>
         builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
-
+// Dependency Injection
 builder.Services.AddHttpContextAccessor();
 
-builder.Services.AddScoped<ICurrentUserService,CurrentUserService>();
+builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 builder.Services.AddScoped<ITaskRepository, TaskRepository>();
-
 builder.Services.AddScoped<ITaskService, TaskService>();
 builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
-
 builder.Services.AddScoped<IProjectService, ProjectService>();
-
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
-
 builder.Services.AddScoped<IAuthService, AuthService>();
-
 builder.Services.AddScoped<JwtService>();
 
-// JWT
+// JWT Authentication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 .AddJwtBearer(options =>
 {
@@ -51,24 +50,23 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateIssuerSigningKey = true,
 
             ValidIssuer = builder.Configuration["Jwt:Issuer"],
-
             ValidAudience = builder.Configuration["Jwt:Audience"],
-
             IssuerSigningKey =
                 new SymmetricSecurityKey(
                     Encoding.UTF8.GetBytes(
-                        builder.Configuration["Jwt:Key"]!))
+                        builder.Configuration["Jwt:Key"]!)),
+            RoleClaimType = System.Security.Claims.ClaimTypes.Role
         };
 });
 
 builder.Services.AddAuthorization();
 
 builder.Services.AddEndpointsApiExplorer();
-
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
-using(var scope = app.Services.CreateScope())
+
+using (var scope = app.Services.CreateScope())
 {
     await DbSeeder.SeedAdminAsync(scope.ServiceProvider);
 }

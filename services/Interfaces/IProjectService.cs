@@ -1,4 +1,4 @@
-using TaskManagementApi.Models.DTOs;
+using TaskManagementApi.DTOs;
 
 namespace TaskManagementApi.Services.Interfaces;
 
