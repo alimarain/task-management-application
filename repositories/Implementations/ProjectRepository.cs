@@ -17,18 +17,17 @@ public class ProjectRepository : IProjectRepository
     public async Task<List<Project>> GetAllAsync()
     {
         return await _context.Projects
-            .Include(x => x.Owner)
-            .Include(x => x.Tasks)
-            .Where(x => !x.IsDeleted)
+            .Include(p => p.Owner)
+            .Include(p => p.Tasks)
             .ToListAsync();
     }
 
     public async Task<Project?> GetByIdAsync(int id)
     {
         return await _context.Projects
-            .Include(x => x.Owner)
-            .Include(x => x.Tasks)
-            .FirstOrDefaultAsync(x => x.Id == id && !x.IsDeleted);
+            .Include(p => p.Owner)
+            .Include(p => p.Tasks)
+            .FirstOrDefaultAsync(x => x.Id == id);
     }
 
     public async Task AddAsync(Project project)

@@ -18,11 +18,9 @@ namespace TaskManagementApi.Controllers;
 
     [HttpGet]
 public async Task<IActionResult> GetAll(
-    [FromQuery] TaskQueryParameters query)
+    [FromQuery] TaskQueryParameters parameters)
 {
-    var tasks = await _service.GetAllAsync(query);
-
-    return Ok(tasks);
+    return Ok(await _service.GetAllAsync(parameters));
 }
 
     [HttpGet("{id}")]

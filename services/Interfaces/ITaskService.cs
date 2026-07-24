@@ -1,11 +1,13 @@
 using TaskManagementApi.DTOs;
 using TaskManagementApi.Models.QueryParameters;
+using TaskManagementApi.Models.Responses;
 
 namespace TaskManagementApi.Services.Interfaces;
 
 public interface ITaskService
 {
-    Task<List<TaskDto>> GetAllAsync(TaskQueryParameters query);
+    Task<PagedResult<TaskDto>> GetAllAsync(
+    TaskQueryParameters parameters);
 
     Task<TaskDto?> GetByIdAsync(int id);
 

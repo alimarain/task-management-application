@@ -1,7 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using TaskManagementApi.Data;
+using TaskManagementApi.Extensions;
 using TaskManagementApi.Models.Entities;
 using TaskManagementApi.Models.QueryParameters;
+using TaskManagementApi.Models.Responses;
 using TaskManagementApi.Repositories.Interfaces;
 
 namespace TaskManagementApi.Repositories;
@@ -15,49 +17,62 @@ public class TaskRepository : ITaskRepository
         _context = context;
     }
 
-    public async Task<List<TaskItem>> GetAllAsync(TaskQueryParameters query)
+    public async Task<PagedResult<TaskItem>> GetAllAsync(
+        TaskQueryParameters parameters)
     {
-        var tasks = _context.Tasks
-            .Where(t => !t.IsDeleted)
+        var query = _context.Tasks
+            .Include(t => t.Project)
+            .Include(t => t.AssignedToUser)
             .AsQueryable();
 
-        if (!string.IsNullOrWhiteSpace(query.Search))
+        // Search
+        if (!string.IsNullOrWhiteSpace(parameters.Search))
         {
-            tasks = tasks.Where(x => x.Title.Contains(query.Search));
+            query = query.Where(t =>
+                t.Title.Contains(parameters.Search) ||
+                t.Description.Contains(parameters.Search));
         }
 
-        if (query.ProjectId.HasValue)
-        {
-            tasks = tasks.Where(x => x.ProjectId == query.ProjectId);
-        }
+        // Filters
+        if (parameters.ProjectId.HasValue)
+            query = query.Where(t =>
+                t.ProjectId == parameters.ProjectId);
 
-        if (query.AssignedUserId.HasValue)
-        {
-            tasks = tasks.Where(x => x.AssignedToUserId == query.AssignedUserId);
-        }
+        if (parameters.AssignedUserId.HasValue)
+            query = query.Where(t =>
+                t.AssignedToUserId == parameters.AssignedUserId);
 
-        if (query.Status.HasValue)
-        {
-            tasks = tasks.Where(x => (int)x.Status == query.Status);
-        }
+        if (parameters.Priority.HasValue)
+            query = query.Where(t =>
+                (int)t.Priority == parameters.Priority);
 
-        if (query.Priority.HasValue)
-        {
-            tasks = tasks.Where(x => (int)x.Priority == query.Priority);
-        }
+        if (parameters.Status.HasValue)
+            query = query.Where(t =>
+                (int)t.Status == parameters.Status);
 
-        return await tasks
-            .Skip((query.PageNumber - 1) * query.PageSize)
-            .Take(query.PageSize)
-            .ToListAsync();
+        // Sorting
+        query = parameters.SortBy?.ToLower() switch
+        {
+            "title" => parameters.Descending
+                ? query.OrderByDescending(t => t.Title)
+                : query.OrderBy(t => t.Title),
+
+            "duedate" => parameters.Descending
+                ? query.OrderByDescending(t => t.DueDate)
+                : query.OrderBy(t => t.DueDate),
+
+            _ => query.OrderByDescending(t => t.Id)
+        };
+
+        return await query.ToPagedResultAsync(parameters);
     }
 
     public async Task<TaskItem?> GetByIdAsync(int id)
     {
         return await _context.Tasks
-            .Include(x => x.Project)
-            .Include(x => x.AssignedToUser)
-            .FirstOrDefaultAsync(x => x.Id == id && !x.IsDeleted);
+            .Include(t => t.Project)
+            .Include(t => t.AssignedToUser)
+            .FirstOrDefaultAsync(x => x.Id == id);
     }
 
     public async Task<TaskItem> CreateAsync(TaskItem task)

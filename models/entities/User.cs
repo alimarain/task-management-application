@@ -14,4 +14,9 @@ public class User : BaseEntity
 
     public ICollection<TaskItem> AssignedTasks { get; set; }
         = new List<TaskItem>();
+    public ICollection<Notification> Notifications { get; set; }
+    = new List<Notification>();
+
+    public ICollection<Attachment> Attachments { get; set; }
+    = new List<Attachment>();
 }

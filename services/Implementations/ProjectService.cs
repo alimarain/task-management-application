@@ -9,11 +9,16 @@ namespace TaskManagementApi.Services;
 public class ProjectService : IProjectService
 {
     private readonly IProjectRepository _repository;
+    private readonly INotificationService _notificationService;
     private readonly IMapper _mapper;
 
-    public ProjectService(IProjectRepository repository, IMapper mapper)
+    public ProjectService(
+        IProjectRepository repository,
+        INotificationService notificationService,
+        IMapper mapper)
     {
         _repository = repository;
+        _notificationService = notificationService;
         _mapper = mapper;
     }
 
@@ -39,6 +44,12 @@ public class ProjectService : IProjectService
         var project = _mapper.Map<Project>(dto);
 
         await _repository.AddAsync(project);
+
+        // Automatically trigger notification for project assignment
+        await _notificationService.CreateAsync(
+            project.OwnerId,
+            "New Project",
+            $"Project '{project.Name}' has been assigned to you.");
 
         var created = await _repository.GetByIdAsync(project.Id);
 

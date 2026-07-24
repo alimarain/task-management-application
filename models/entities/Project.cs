@@ -8,4 +8,6 @@ public class Project : BaseEntity
     public User Owner { get; set; } = null!;
     public ICollection<TaskItem> Tasks { get; set; }
         = new List<TaskItem>();
+    public ICollection<Attachment> Attachments { get; set; }
+    = new List<Attachment>();
 }

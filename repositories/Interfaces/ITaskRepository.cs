@@ -1,12 +1,12 @@
 using TaskManagementApi.Models.Entities;
 using TaskManagementApi.Models.QueryParameters;
+using TaskManagementApi.Models.Responses;
 
 namespace TaskManagementApi.Repositories.Interfaces;
 
 public interface ITaskRepository
 {
-    Task<List<TaskItem>> GetAllAsync(TaskQueryParameters query);
-
+    Task<PagedResult<TaskItem>> GetAllAsync(TaskQueryParameters parameters);
     Task<TaskItem?> GetByIdAsync(int id);
 
     Task<TaskItem> CreateAsync(TaskItem task);

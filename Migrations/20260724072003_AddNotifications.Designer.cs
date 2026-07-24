@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TaskManagementApi.Data;
 
@@ -11,9 +12,11 @@ using TaskManagementApi.Data;
 namespace TaskManagementApi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260724072003_AddNotifications")]
+    partial class AddNotifications
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,62 +24,6 @@ namespace TaskManagementApi.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("TaskManagementApi.Models.Entities.Attachment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ContentType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("FileName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FilePath")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("FileSize")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<int?>("ProjectId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("StoredFileName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("TaskId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("UploadedByUserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProjectId");
-
-                    b.HasIndex("TaskId");
-
-                    b.HasIndex("UploadedByUserId");
-
-                    b.ToTable("Attachments");
-                });
 
             modelBuilder.Entity("TaskManagementApi.Models.Entities.AuditLog", b =>
                 {
@@ -291,31 +238,6 @@ namespace TaskManagementApi.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("TaskManagementApi.Models.Entities.Attachment", b =>
-                {
-                    b.HasOne("TaskManagementApi.Models.Entities.Project", "Project")
-                        .WithMany("Attachments")
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.HasOne("TaskManagementApi.Models.Entities.TaskItem", "Task")
-                        .WithMany("Attachments")
-                        .HasForeignKey("TaskId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.HasOne("TaskManagementApi.Models.Entities.User", "UploadedByUser")
-                        .WithMany("Attachments")
-                        .HasForeignKey("UploadedByUserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Project");
-
-                    b.Navigation("Task");
-
-                    b.Navigation("UploadedByUser");
-                });
-
             modelBuilder.Entity("TaskManagementApi.Models.Entities.Notification", b =>
                 {
                     b.HasOne("TaskManagementApi.Models.Entities.User", "User")
@@ -359,21 +281,12 @@ namespace TaskManagementApi.Migrations
 
             modelBuilder.Entity("TaskManagementApi.Models.Entities.Project", b =>
                 {
-                    b.Navigation("Attachments");
-
                     b.Navigation("Tasks");
-                });
-
-            modelBuilder.Entity("TaskManagementApi.Models.Entities.TaskItem", b =>
-                {
-                    b.Navigation("Attachments");
                 });
 
             modelBuilder.Entity("TaskManagementApi.Models.Entities.User", b =>
                 {
                     b.Navigation("AssignedTasks");
-
-                    b.Navigation("Attachments");
 
                     b.Navigation("Notifications");
 

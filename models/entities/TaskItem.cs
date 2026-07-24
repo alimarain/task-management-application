@@ -13,4 +13,6 @@ public class TaskItem : BaseEntity
     public Project Project { get; set; } = null!;
     public int AssignedToUserId { get; set; }
     public User AssignedToUser { get; set; } = null!;
+    public ICollection<Attachment> Attachments { get; set; }
+    = new List<Attachment>();
 }
