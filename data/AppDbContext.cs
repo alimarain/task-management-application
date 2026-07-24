@@ -11,10 +11,9 @@ public class AppDbContext : DbContext
     }
 
     public DbSet<User> Users => Set<User>();
-
     public DbSet<Project> Projects => Set<Project>();
-
     public DbSet<TaskItem> Tasks => Set<TaskItem>();
+    public DbSet<AuditLog> AuditLogs => Set<AuditLog>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
